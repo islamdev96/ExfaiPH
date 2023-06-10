@@ -29,6 +29,7 @@ if ($count > 0) {
     $stmt->execute(array($email));
     $userData = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    echo json_encode(array("status" => "success", "data" => $userData));
+    $response = array("status" => "success", "data" => $userData);
+    echo json_encode($response);
 }
 ?>
