@@ -60,26 +60,7 @@ function getLoginData($table, $where = null, $values = null, $json = true)
     }
 }
 
-function getSignupData($table, $where = null, $values = null, $json = true)
-{
-    global $con;
-    $data = array();
-    $stmt = $con->prepare("SELECT  * FROM $table WHERE   $where ");
-    $stmt->execute($values);
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    $count  = $stmt->rowCount();
-    if ($json == true) {
-        if ($count > 0) {
-            echo json_encode(array("status" => "success getSignupData", "data" => $data));
-        } else {
-            echo json_encode(array("status" => "failure getSignupData"));
-        }
-    } else {
-        return $count;
-    }
-}
-
-
+ 
 
 function insertData($table, $data, $json = true)
 {

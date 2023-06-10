@@ -9,4 +9,4 @@ $email = filterRequest("email");
 // $count = $stmt->rowCount();
 // result($count) ; 
 
-getLoginData("users" , "users_email = ? AND  users_password = ?" , array($email , $password)) ; 
+getAllData("users" , "users_email = ? AND  users_password = ?" , array($email , $password)) ; 
