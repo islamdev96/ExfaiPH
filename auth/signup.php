@@ -31,8 +31,9 @@ if ($count > 0) {
     
     $response = array(
         "status" => "success",
-        "data" => array($userData) // Wrap the user data in an array
+        "data" => array($userData)
     );
+
     echo json_encode($response);
 }
 ?>
