@@ -1,7 +1,7 @@
 <?php
 
 
-include "../connect.php";
+include "../include.php";
 
 
 $id = filterRequest("id");

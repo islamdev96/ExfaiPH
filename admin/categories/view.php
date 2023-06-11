@@ -1,5 +1,5 @@
 <?php
 
-include "../../connect.php" ; 
+include "../../include.php" ; 
 
 getAllData("categories") ;  

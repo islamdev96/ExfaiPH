@@ -2,7 +2,7 @@
 
 $notAuth = "" ; 
 
-include "connect.php" ; 
+include "include.php" ; 
  
 sendGCM("hi"  , "How Are You" , "users31" , "" , "") ; 
 

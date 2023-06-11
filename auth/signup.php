@@ -1,6 +1,6 @@
 <?php
 
-include "../connect.php";
+include "../include.php";
 
 $username = filterRequest("username");
 $password = sha1($_POST['password']);

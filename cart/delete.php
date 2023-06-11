@@ -1,6 +1,6 @@
 <?php 
 
-include "../connect.php" ; 
+include "../include.php" ; 
 
 $usersid = filterRequest("usersid");
 $itemsid = filterRequest("itemsid");
