@@ -1,6 +1,6 @@
 <?php
-$dsn = "mysql:host=localhost;dbname=u700906284_exfai";
-$user = "u700906284_islam";
+$dsn = "mysql:host=localhost;dbname=u700906284_exfai2";
+$user = "u700906284_islam2";
 $pass = "Islam253**";
 $option = array(
    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"
@@ -16,4 +16,5 @@ try {
    include "functions.php";
 } catch (PDOException $e) {
    echo $e->getMessage();
+
 }
