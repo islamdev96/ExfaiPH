@@ -1,6 +1,6 @@
 <?php
 $dsn = "mysql:host=localhost;dbname=u700906284_exfai2";
-$user = "u700906284_exfai2";
+$user = "u700906284_islam2";
 $pass = "Islam222";
 $option = array(
    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"
