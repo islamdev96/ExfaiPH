@@ -45,7 +45,11 @@ function getData($table, $where = null, $values = null, $json = true)
 {
     global $con;
     $data = array();
-    $stmt = $con->prepare("SELECT  * FROM $table WHERE   $where ");
+    $sql = "SELECT * FROM $table";
+    if ($where) {
+        $sql .= " WHERE $where";
+    }
+    $stmt = $con->prepare($sql);
     $stmt->execute($values);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $count  = $stmt->rowCount();
@@ -60,21 +64,15 @@ function getData($table, $where = null, $values = null, $json = true)
     }
 }
 
-
-
-
 function insertData($table, $data, $json = true)
 {
     global $con;
-    foreach ($data as $field => $v)
-        $ins[] = ':' . $field;
-    $ins = implode(',', $ins);
     $fields = implode(',', array_keys($data));
-    $sql = "INSERT INTO $table ($fields) VALUES ($ins)";
-
+    $placeholders = ':' . implode(',:', array_keys($data));
+    $sql = "INSERT INTO $table ($fields) VALUES ($placeholders)";
     $stmt = $con->prepare($sql);
-    foreach ($data as $f => $v) {
-        $stmt->bindValue(':' . $f, $v);
+    foreach ($data as $field => $value) {
+        $stmt->bindValue(':' . $field, $value);
     }
     $stmt->execute();
     $count = $stmt->rowCount();
