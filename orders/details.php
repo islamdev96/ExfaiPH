@@ -4,6 +4,6 @@ include "../include.php" ;
 
 $ordersid = filterRequest("id")  ;
 
-getAllData("ordersdetailsview" , "cart_orders = $ordersid "); 
+getAllData("ordersdetailsview" , "cart_orders = $ordersid"); 
 
 ?>
