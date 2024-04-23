@@ -41,15 +41,37 @@ function getAllData($table, $where = null, $values = null, $json = true)
     }
 }
 
+function getAllUserData($table, $userId, $json = true)
+{
+    global $con;
+    $data = array();
+
+    $stmt = $con->prepare("SELECT * FROM $table WHERE book_userid = ? ");
+    $stmt->execute([$userId]);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $count  = $stmt->rowCount();
+    if ($json == true) {
+        if ($count > 0) {
+            echo json_encode(array("status" => "success", "data" => $data));
+        } else {
+            echo json_encode(array("status" => "failure"));
+        }
+        return $count;
+    } else {
+        if ($count > 0) {
+            return  array("status" => "success", "data" => $data);
+        } else {
+            return  array("status" => "failure ......");
+        }
+    }
+}
+
+
 function getData($table, $where = null, $values = null, $json = true)
 {
     global $con;
     $data = array();
-    $sql = "SELECT * FROM $table";
-    if ($where) {
-        $sql .= " WHERE $where";
-    }
-    $stmt = $con->prepare($sql);
+    $stmt = $con->prepare("SELECT  * FROM $table WHERE   $where ");
     $stmt->execute($values);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $count  = $stmt->rowCount();
@@ -64,15 +86,21 @@ function getData($table, $where = null, $values = null, $json = true)
     }
 }
 
+
+
+
 function insertData($table, $data, $json = true)
 {
     global $con;
+    foreach ($data as $field => $v)
+        $ins[] = ':' . $field;
+    $ins = implode(',', $ins);
     $fields = implode(',', array_keys($data));
-    $placeholders = ':' . implode(',:', array_keys($data));
-    $sql = "INSERT INTO $table ($fields) VALUES ($placeholders)";
+    $sql = "INSERT INTO $table ($fields) VALUES ($ins)";
+
     $stmt = $con->prepare($sql);
-    foreach ($data as $field => $value) {
-        $stmt->bindValue(':' . $field, $value);
+    foreach ($data as $f => $v) {
+        $stmt->bindValue(':' . $f, $v);
     }
     $stmt->execute();
     $count = $stmt->rowCount();
@@ -128,6 +156,33 @@ function deleteData($table, $where, $json = true)
     return $count;
 }
 
+
+// function imageUpload($dir, $imageRequest)
+// {
+//     global $msgError;
+//     if (isset($_FILES[$imageRequest])) {
+//         $imagename  = rand(1000, 10000) . $_FILES[$imageRequest]['name'];
+//         $imagetmp   = $_FILES[$imageRequest]['tmp_name'];
+//         $imagesize  = $_FILES[$imageRequest]['size'];
+
+//         if ($imagesize > 2 * MB) {
+//             $msgError = "size";
+//         }
+//         if (empty($msgError)) {
+//             move_uploaded_file($imagetmp,  $dir . "/" . $imagename);
+//             return $imagename;
+//         } else {
+//             return "fail";
+//         }
+//     } else {
+//         // If no image is uploaded, provide a default image path
+//         // Adjust the default image path as per your application's structure
+//         $defaultImagePath = "defaultImage.jpg";
+        
+//         return $defaultImagePath;
+//     }
+// }
+
 function imageUpload($dir, $imageRequest)
 {
     global $msgError;
@@ -135,14 +190,13 @@ function imageUpload($dir, $imageRequest)
         $imagename  = rand(1000, 10000) . $_FILES[$imageRequest]['name'];
         $imagetmp   = $_FILES[$imageRequest]['tmp_name'];
         $imagesize  = $_FILES[$imageRequest]['size'];
-        $allowExt   = array("jpg", "png", "gif", "mp3", "pdf" , "svg");
         $strToArray = explode(".", $imagename);
         $ext        = end($strToArray);
         $ext        = strtolower($ext);
 
-        if (!empty($imagename) && !in_array($ext, $allowExt)) {
-            $msgError = "EXT";
-        }
+        // if (!empty($imagename) && !in_array($ext, )) {
+        //     $msgError = "EXT";
+        // }
         if ($imagesize > 2 * MB) {
             $msgError = "size";
         }
@@ -265,4 +319,14 @@ function insertNotify($title, $body, $userid, $topic, $pageid, $pagename)
     sendGCM($title,  $body, $topic, $pageid, $pagename);
     $count = $stmt->rowCount();
     return $count;
+}
+
+
+function getCurrentUserId($userId)
+{
+    global $con;
+    $stmt = $con->prepare("SELECT users_id FROM users WHERE users_id = ?");
+    $stmt->execute(array($userId));
+    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $userData['users_id'];
 }

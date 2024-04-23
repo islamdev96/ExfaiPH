@@ -7,7 +7,7 @@ INNER JOIN  categories on  items.items_cat = categories.categories_id ;
 CREATE OR REPLACE VIEW myfavorite AS
 SELECT favorite.* , items.* , users.users_id FROM favorite 
 INNER JOIN users ON users.users_id  = favorite.favorite_usersid
-INNER JOIN items ON items.items_id  = favorite.favorite_itemsid
+INNER JOIN items ON items.items_id  = favorite.favorite_itemsid;
 
 
 
@@ -35,18 +35,3 @@ SELECT COUNT(cart_id) as countitems , cart.* , items.*  , (items_price - (items_
 INNER JOIN items ON items.items_id = cart.cart_itemsid
 WHERE cart_orders != 0 
 GROUP by cart_itemsid   ; 
-
-
-
- 
- 
-
-
- 
- 
-
-
-
- 
-
- 
