@@ -1,7 +1,8 @@
 <?php
 
-include "../connect.php";
-
+include "../include.php" ; 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 $username = filterRequest("username");
 $password = sha1($_POST['password']);
 $email = filterRequest("email");
