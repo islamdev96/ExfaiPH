@@ -15,7 +15,7 @@ $paymentmethod = filterRequest("paymentmethod");
 $coupondiscount = filterRequest("coupondiscount");
 
 // Establish database connection
-$connect = new PDO("mysql:host=localhost;dbname=u700906284_exfai22;charset=utf8mb4", "u700906284_exfai22", "Islam253");
+$connect = new PDO("mysql:host=localhost;dbname=u699408021_exfai;charset=utf8mb4", "u699408021_exfai", "Islam253");
 $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 if ($orderstype == '1') {
